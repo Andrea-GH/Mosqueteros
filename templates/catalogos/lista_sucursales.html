@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sucursales</title>
+</head>
+<body>
+    <h1>Listado de Sucursales</h1>
+
+    <ul>
+        {% for sucursal in sucursales %}
+            <li>{{ sucursal.nombre }} - {{ sucursal.ciudad }} - {{ sucursal.estado }} - {{ sucursal.pais }}</li>
+        {% empty %}
+            <li>No hay sucursales registradas.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="/">Volver al inicio</a>
+</body>
+</html>

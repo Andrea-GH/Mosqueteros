@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Vendedores</title>
+</head>
+<body>
+    <h1>Listado de Vendedores</h1>
+
+    <ul>
+        {% for vendedor in vendedores %}
+            <li>{{ vendedor.nombre }} - {{ vendedor.sucursal.nombre }}</li>
+        {% empty %}
+            <li>No hay vendedores registrados.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="/">Volver al inicio</a>
+</body>
+</html>
