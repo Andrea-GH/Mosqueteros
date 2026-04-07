@@ -216,7 +216,7 @@ class Command(BaseCommand):
         # Agrupar por documento para crear una Venta por documento y sus DetalleVenta
         ventas_por_documento = {}
         for r in registros:
-            doc = int(r['documento'])
+            doc = str(r['documento'])
             ventas_por_documento.setdefault(doc, []).append(r)
 
         for documento, items in ventas_por_documento.items():
@@ -227,7 +227,7 @@ class Command(BaseCommand):
             vendedor = vendedores_cache[primera['vendedor']]
             metodo_pago = metodos_cache[primera['forma_pago']]
 
-            folio = f"DOC-{documento:05d}"
+            folio = f"DOC-{documento}"
 
             subtotal_venta = Decimal('0.00')
             for item in items:

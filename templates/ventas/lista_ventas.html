@@ -1,63 +1,92 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
- <meta charset="UTF-8">
- <title>Listado de Ventas</title>
- <style>
- body {
- font-family: Arial, sans-serif;
- background: #f4f6f9;
- margin: 0;
- padding: 20px;
- }
- .card {
- background: white;
- border-radius: 10px;
- padding: 20px;
- box-shadow: 0 2px 8px rgba(0,0,0,0.08);
- }
- table {
- width: 100%;
- border-collapse: collapse;
- }
- th, td {
- border: 1px solid #d1d5db;
- padding: 10px;
- }
- th {
- background: #e5e7eb;
- }
- a {
- text-decoration: none;
- }
- </style>
+    <meta charset="UTF-8">
+    <title>Listado de Ventas</title>
+    <style>
+        /* Estilos alineados con el Reporte Mensual y el manual FCA */
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .header {
+            background: linear-gradient(135deg, #111827, #1f2937);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow-x: auto; /* Para que la tabla sea responsiva */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #d1d5db;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #e5e7eb;
+            color: #374151;
+        }
+        tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+        .boton-volver {
+            text-decoration: none;
+            color: white;
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        .boton-volver:hover {
+            opacity: 1;
+        }
+    </style>
 </head>
 <body>
- <div class="card">
- <h1>Listado de ventas</h1>
- <p><a href="{% url 'inicio' %}">Volver al dashboard</a></p>
- <table>
- <tr>
- <th>Folio</th>
- <th>Fecha</th>
- <th>Cliente</th>
- <th>Sucursal</th>
- <th>Vendedor</th>
- <th>Método de pago</th>
- <th>Total</th>
- </tr>
- {% for venta in ventas %}
- <tr>
- <td>{{ venta.folio }}</td>
- <td>{{ venta.fecha }}</td>
- <td>{{ venta.cliente.nombre }}</td>
- <td>{{ venta.sucursal.nombre }}</td>
- <td>{{ venta.vendedor.nombre }}</td>
- <td>{{ venta.metodo_pago.nombre }}</td>
- <td>{{ venta.total }}</td>
- </tr>
- {% endfor %}
- </table>
- </div>
+    <div class="header">
+        <h1>Listado de Ventas</h1>
+        <a href="{% url 'inicio' %}" class="boton-volver">← Volver al dashboard</a>
+    </div>
+
+    <div class="card">
+        <table>
+            <thead>
+                <tr>
+                    <th>Folio</th>
+                    <th>Fecha</th>
+                    <th>Cliente</th>
+                    <th>Sucursal</th>
+                    <th>Vendedor</th>
+                    <th>Método de pago</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for venta in ventas %}
+                <tr>
+                    <td>{{ venta.folio }}</td>
+                    <td>{{ venta.fecha|date:"d \d\e F \d\e Y" }}</td>
+                    <td>{{ venta.cliente.nombre }}</td>
+                    <td>{{ venta.sucursal.nombre }}</td>
+                    <td>{{ venta.vendedor.nombre }}</td>
+                    <td>{{ venta.metodo_pago.nombre }}</td>
+                    <td>${{ venta.total }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

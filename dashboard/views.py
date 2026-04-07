@@ -123,22 +123,24 @@ def exportar_ventas_excel(request):
 def dashboard_comparativo(request):
     comparativo_categorias = (
         DetalleVenta.objects.values('producto__categoria__nombre')
-        .annotate(total=Sum('subtotal')) # <--- CAMBIADO A 'subtotal'
+        .annotate(total=Sum('subtotal')) 
         .order_by('-total')
     )
+    
     comparativo_ciudades = (
-        Venta.objects.values('sucursal__ciudad')
+        Venta.objects.values('sucursal__ciudad') 
         .annotate(total=Sum('total'))
         .order_by('-total')
     )
+
     comparativo_metodos = (
         Venta.objects.values('metodo_pago__nombre')
         .annotate(total=Sum('total'))
         .order_by('-total')
     )
+
     return render(request, 'dashboard/comparativo.html', {
         'comparativo_categorias': comparativo_categorias,
         'comparativo_ciudades': comparativo_ciudades,
         'comparativo_metodos': comparativo_metodos,
     })
-    

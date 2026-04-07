@@ -1,25 +1,83 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
- <meta charset="UTF-8">
- <title>Reporte Mensual</title>
+    <meta charset="UTF-8">
+    <title>Reporte Mensual</title>
+    <style>
+        /* Estilos basados en tu manual del Proyecto FCA */
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .header {
+            background: linear-gradient(135deg, #111827, #1f2937);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #d1d5db;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #e5e7eb;
+            color: #374151;
+        }
+        tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+        .boton-volver {
+            text-decoration: none;
+            color: white;
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        .boton-volver:hover {
+            opacity: 1;
+        }
+    </style>
 </head>
 <body>
- <h1>Reporte mensual de ventas</h1>
- <a href="{% url 'inicio' %}">Volver al dashboard</a>
- <table border="1">
- <tr>
- <th>Mes</th>
- <th>Total ventas</th>
- <th>Total documentos</th>
- </tr>
- {% for item in datos %}
- <tr>
- <td>{{ item.mes|date:"F Y" }}</td>
- <td>{{ item.total_ventas }}</td>
- <td>{{ item.total_documentos }}</td>
- </tr>
- {% endfor %}
- </table>
+    <div class="header">
+        <h1>Reporte Mensual de Ventas</h1>
+        <a href="{% url 'inicio' %}" class="boton-volver">← Volver al dashboard</a>
+    </div>
+
+    <div class="card">
+        <table>
+            <thead>
+                <tr>
+                    <th>Mes</th>
+                    <th>Total ventas</th>
+                    <th>Total documentos</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in datos %}
+                <tr>
+                    <td>{{ item.mes|date:"F Y" }}</td>
+                    <td>${{ item.total_ventas|floatformat:1 }}</td>
+                    <td>{{ item.total_documentos }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
