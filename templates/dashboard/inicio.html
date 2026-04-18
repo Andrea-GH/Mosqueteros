@@ -26,8 +26,16 @@
 </head>
 <body>
 <header>
-    <h1>Dashboard Ejecutivo de Ventas</h1>
-    <p>Visualización general del desempeño comercial</p>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <h1>Dashboard Ejecutivo de Ventas</h1>
+            <p>Bienvenido, {{ user.username }} | Visualización general del desempeño</p>
+        </div>
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" style="background: #ef4444;">Cerrar sesión</button>
+        </form>
+    </div>
 </header>
 <div class="contenedor">
     <section class="card">

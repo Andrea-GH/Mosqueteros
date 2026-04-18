@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="login-box">
+    <div class="logo-placeholder">
+        <svg xmlns="http://www.w3.org/2000/svg" height="60" viewBox="0 0 24 24" width="60" fill="#1e3a8a">
+            <path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/>
+        </svg>
+        <h2 style="color: #1e3a8a; margin-top: 15px;">Ingreso al Sistema</h2>
+    </div>
+
+    {# 1. Muestra errores generales de login (como usuario/contraseña mal) #}
+    {% if form.errors %}
+    <div style="background-color: #fee2e2; border: 1px solid #ef4444; color: #b91c1c; padding: 12px; border-radius: 8px; margin-bottom: 20px; font-size: 14px; text-align: center;">
+        <strong>¡Error!</strong> El usuario o la contraseña son incorrectos.
+    </div>
+    {% endif %}
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        <div style="margin-bottom: 15px; text-align: left;">
+            <label style="display: block; font-weight: bold; margin-bottom: 5px;">Nombre de usuario</label>
+            {{ form.username }}
+        </div>
+        
+        <div style="margin-bottom: 20px; text-align: left;">
+            <label style="display: block; font-weight: bold; margin-bottom: 5px;">Contraseña</label>
+            {{ form.password }}
+        </div>
+        
+        <button type="submit" class="btn-principal">INICIAR SESIÓN</button>
+    </form>
+    
+    <div style="text-align: center; margin-top: 25px;">
+        <small style="color: #94a3b8;">&copy; 2026 Sistema de Prospectiva de Negocios</small>
+    </div>
+</div>
+{% endblock %}
