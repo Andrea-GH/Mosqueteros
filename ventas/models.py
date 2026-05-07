@@ -38,7 +38,7 @@ class Venta(models.Model):
         verbose_name_plural = "Ventas"
         ordering = ['-fecha']
 
-    def __str__(self):
+    def _str_(self):
         return f"{self.folio} - {self.cliente.nombre}"
 
 
@@ -61,5 +61,5 @@ class DetalleVenta(models.Model):
         verbose_name = "Detalle de venta"
         verbose_name_plural = "Detalles de venta"
 
-    def __str__(self):
+    def _str_(self):
         return f"{self.venta.folio} - {self.producto.nombre}"
