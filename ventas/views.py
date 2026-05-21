@@ -8,12 +8,14 @@ from decimal import Decimal
 
 @require_GET
 def lista_ventas(request):
+    # CORRECCIÓN: Quitamos prefetch_related para evitar el límite de variables de SQLite
+    # select_related se queda porque hace un JOIN directo muy eficiente
     ventas = Venta.objects.select_related(
         'cliente',
         'sucursal',
         'vendedor',
         'metodo_pago'
-    ).prefetch_related('detalles').all()
+    ).all()
     
     # Obtener moneda seleccionada (por defecto MXN)
     currency = request.GET.get('currency', 'MXN').upper()
@@ -25,7 +27,8 @@ def lista_ventas(request):
     # Procesar cada venta para convertir sus montos
     for venta in ventas:
         venta.subtotal_original = venta.subtotal
-        venta.impuesto_original = venta.impuesto
+        # Evitamos errores si el impuesto viene vacío/Null en el Excel
+        venta.impuesto_original = venta.impuesto if venta.impuesto else Decimal('0.0')
         venta.total_original = venta.total
         
         if currency != 'MXN':
@@ -33,6 +36,8 @@ def lista_ventas(request):
             venta.impuesto = CurrencyConverter.convert(venta.impuesto, 'MXN', currency)
             venta.total = CurrencyConverter.convert(venta.total, 'MXN', currency)
         
+        # Opcional: Si en el HTML recorres venta.detalles.all, al quitar el prefetch 
+        # Django lo llamará bajo demanda sin romper el límite de SQLite.
         venta.moneda = currency
     
     # Calcular totales generales
